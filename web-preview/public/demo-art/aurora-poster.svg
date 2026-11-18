@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a3048"/>
+      <stop offset="50%" stop-color="#143858"/>
+      <stop offset="100%" stop-color="#050507"/>
+    </linearGradient>
+    <radialGradient id="a" cx="50%" cy="28%" r="48%">
+      <stop offset="0%" stop-color="#6ad0f0" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#6ad0f0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="600" fill="url(#bg)"/>
+  <rect width="400" height="600" fill="url(#a)"/>
+  <rect x="120" y="150" width="160" height="48" rx="10" fill="#2a6080"/>
+  <rect x="155" y="100" width="90" height="58" rx="8" fill="#3a88a8"/>
+  <text x="24" y="480" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700">Aurora Station</text>
+  <text x="24" y="512" fill="#d0d0d6" font-family="Segoe UI, Arial, sans-serif" font-size="15">SF · 2022 · démo</text>
+</svg>

@@ -1,0 +1,25 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="1001" tmdb-id="9001" group-title="Films VF",Obsidian Night [VF]
+https://example.invalid/streams/obsidian_vf.m3u8
+#EXTINF:-1 tvg-id="1001b" tmdb-id="9001" group-title="Movies EN",Obsidian Night [EN]
+https://example.invalid/streams/obsidian_en.m3u8
+#EXTINF:-1 tvg-id="1002" group-title="Films VF",Goldline Express [VF]
+https://example.invalid/streams/goldline.m3u8
+#EXTINF:-1 tvg-id="1003" tmdb-id="9003" group-title="Movies EN",Harbor Lights [EN]
+https://example.invalid/streams/harbor_en.m3u8
+#EXTINF:-1 tvg-id="1004" group-title="Films VF",Crimson Orbit [VF]
+https://example.invalid/streams/crimson.m3u8
+#EXTINF:-1 tvg-id="1005" group-title="Films VF",Neon Harbor [VF]
+https://example.invalid/streams/neon.m3u8
+#EXTINF:-1 tvg-id="aurora" tmdb-id="9100" group-title="Séries",Aurora Station S01E01 [VF]
+https://example.invalid/streams/aurora_s01e01.m3u8
+#EXTINF:-1 tvg-id="aurora2" tmdb-id="9100" group-title="Séries",Aurora Station S01E02 [VF]
+https://example.invalid/streams/aurora_s01e02.m3u8
+#EXTINF:-1 tvg-id="aurora3" tmdb-id="9100" group-title="Séries",Aurora Station S01E03 [VF]
+https://example.invalid/streams/aurora_s01e03.m3u8
+#EXTINF:-1 tvg-id="aurora4" tmdb-id="9100" group-title="Séries",Aurora Station S02E01 [VO]
+https://example.invalid/streams/aurora_s02e01.m3u8
+#EXTINF:-1 tvg-id="aurora5" tmdb-id="9100" group-title="Séries",Aurora Station S02E02 [VO]
+https://example.invalid/streams/aurora_s02e02.m3u8
+#EXTINF:-1 tvg-id="3001" group-title="Jeunesse",Orbit Kids
+https://example.invalid/streams/orbit.m3u8

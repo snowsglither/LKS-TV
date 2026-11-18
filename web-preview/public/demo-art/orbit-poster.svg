@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a4030"/>
+      <stop offset="100%" stop-color="#050507"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="600" fill="url(#bg)"/>
+  <circle cx="200" cy="220" r="85" fill="none" stroke="#e8c84a" stroke-width="6"/>
+  <circle cx="200" cy="220" r="28" fill="#e8c84a"/>
+  <text x="24" y="480" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700">Orbit Kids</text>
+  <text x="24" y="512" fill="#d0d0d6" font-family="Segoe UI, Arial, sans-serif" font-size="15">LKS TV · démo</text>
+</svg>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LKS TV</string>
+    <string name="cd_back">Retour</string>
+    <string name="cd_refresh_demo">Actualiser (démo)</string>
+    <string name="cd_profile">Profil actif</string>
+    <string name="cd_section_menu">Menu de personnalisation</string>
+</resources>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="sky" x1="0.15" y1="0" x2="0.9" y2="1">
+      <stop offset="0%" stop-color="#1a060c"/>
+      <stop offset="35%" stop-color="#3a101c"/>
+      <stop offset="100%" stop-color="#080408"/>
+    </linearGradient>
+    <radialGradient id="neon" cx="78%" cy="32%" r="42%">
+      <stop offset="0%" stop-color="#ff2a36" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#ff2a36" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <rect width="1920" height="1080" fill="url(#neon)"/>
+  <rect x="1120" y="140" width="520" height="720" rx="18" fill="#4a1420" opacity="0.55"/>
+  <rect x="1180" y="220" width="400" height="240" rx="10" fill="#802030" opacity="0.45"/>
+  <rect x="0" y="720" width="1920" height="360" fill="#050507" opacity="0.55"/>
+  <text x="72" y="88" fill="#ff4d5a" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="8">LKS TV</text>
+</svg>

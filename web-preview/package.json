@@ -1,0 +1,22 @@
+{
+  "name": "lks-tv-web-preview",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "Localhost preview for LKS TV TASK-003 — not a native Android TV validation",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "test": "node scripts/smoke-iptv.mjs",
+    "test:load": "node scripts/load-sync.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.1"
+  }
+}

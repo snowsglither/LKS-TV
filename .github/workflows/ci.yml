@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+
+jobs:
+  android:
+    name: Android build + unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+      - name: Grant Gradle
+        run: chmod +x gradlew
+      - name: Unit tests
+        run: ./gradlew :app:testDebugUnitTest --stacktrace
+      - name: Assemble debug APK
+        run: ./gradlew :app:assembleDebug --stacktrace
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: lks-tv-debug
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: warn
+
+  secrets-scan:
+    name: Secrets hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Reject tracked secrets / personal data
+        run: |
+          set -euo pipefail
+          if git ls-files | grep -E '(^|/)(\.env|keystore\.properties|.*\.(jks|keystore)|web-preview/\.data/)'; then
+            echo "Tracked secret-like paths found"
+            exit 1
+          fi
+          if git ls-files | grep -Ei '\.(m3u|m3u8)$' | grep -vE 'sample_playlist\.m3u$'; then
+            echo "Non-sample playlists must not be tracked"
+            exit 1
+          fi
+          echo "Secrets hygiene OK"
+
+  web-preview:
+    name: Web-preview smoke
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web-preview
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: web-preview/package-lock.json
+      - run: npm ci
+      - run: npm test

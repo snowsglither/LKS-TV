@@ -1,0 +1,11 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="1001" group-title="Films VF",Obsidian Night [VF]
+https://example.invalid/streams/obsidian_vf.m3u8
+#EXTINF:-1 tvg-id="1002" group-title="Films VF",Goldline Express
+https://example.invalid/streams/goldline.m3u8
+#EXTINF:-1 tvg-id="tt1234567" tmdb-id="550" group-title="Movies EN",Harbor Lights [EN]
+https://example.invalid/streams/harbor_en.m3u8
+#EXTINF:-1 tvg-id="2001" group-title="Séries",Aurora Station S01E01
+https://example.invalid/streams/aurora_s01e01.m3u8
+#EXTINF:-1 tvg-id="3001" group-title="Jeunesse",Orbit Kids
+https://example.invalid/streams/orbit.m3u8

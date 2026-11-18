@@ -1,0 +1,122 @@
+name: Release
+
+# Official signed releases only — NOT on every push.
+# Requires repository secrets: LKSTV_KEYSTORE_BASE64, LKSTV_KEYSTORE_PASSWORD,
+# LKSTV_KEY_ALIAS, LKSTV_KEY_PASSWORD.
+on:
+  workflow_dispatch:
+    inputs:
+      versionName:
+        description: "versionName (must match app/build.gradle.kts, e.g. 0.3.0)"
+        required: true
+      versionCode:
+        description: "versionCode integer (must match app/build.gradle.kts)"
+        required: true
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release-apk:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+      - name: Grant Gradle
+        run: chmod +x gradlew
+      - name: Require signing secrets for release
+        env:
+          KEYSTORE_BASE64: ${{ secrets.LKSTV_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.LKSTV_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.LKSTV_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.LKSTV_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [ -z "${KEYSTORE_BASE64}" ] || [ -z "${KEYSTORE_PASSWORD}" ] || [ -z "${KEY_ALIAS}" ] || [ -z "${KEY_PASSWORD}" ]; then
+            echo "Missing LKSTV_* signing secrets. Configure them before an official release."
+            exit 1
+          fi
+          echo "$KEYSTORE_BASE64" | base64 -d > lks-release.jks
+          printf '%s\n' \
+            "storeFile=lks-release.jks" \
+            "storePassword=${KEYSTORE_PASSWORD}" \
+            "keyAlias=${KEY_ALIAS}" \
+            "keyPassword=${KEY_PASSWORD}" \
+            > keystore.properties
+      - name: Assemble release
+        run: ./gradlew :app:assembleRelease --stacktrace
+      - name: Package artefacts + update manifest
+        id: package
+        run: |
+          set -euo pipefail
+          APK=$(ls app/build/outputs/apk/release/*.apk | head -n1)
+          SHA=$(sha256sum "$APK" | awk '{print $1}')
+          CODE="${{ github.event.inputs.versionCode }}"
+          VNAME="${{ github.event.inputs.versionName }}"
+          if [ -z "${CODE}" ]; then
+            CODE=$(grep -E 'versionCode\s*=' app/build.gradle.kts | head -n1 | grep -oE '[0-9]+')
+          fi
+          if [ -z "${VNAME}" ]; then
+            VNAME=$(grep -E 'versionName\s*=' app/build.gradle.kts | head -n1 | sed -E 's/.*"([^"]+)".*/\1/')
+          fi
+          mkdir -p dist
+          cp "$APK" dist/LKS-TV.apk
+          echo "$SHA  LKS-TV.apk" > dist/LKS-TV.apk.sha256
+          APK_URL="https://github.com/snowsglither/LKS-TV/releases/latest/download/LKS-TV.apk"
+          printf '%s\n' \
+            '{' \
+            "  \"versionCode\": ${CODE}," \
+            "  \"versionName\": \"${VNAME}\"," \
+            "  \"apkUrl\": \"${APK_URL}\"," \
+            "  \"sha256\": \"${SHA}\"," \
+            "  \"changelog\": \"See GitHub Release notes for LKS TV ${VNAME}.\"," \
+            '  "minSdk": 24' \
+            '}' \
+            > dist/update-manifest.json
+          {
+            echo "version_code=${CODE}"
+            echo "version_name=${VNAME}"
+            echo "sha256=${SHA}"
+          } >> "$GITHUB_OUTPUT"
+          echo "Packaged LKS-TV.apk versionName=${VNAME} versionCode=${CODE} sha256=${SHA}"
+      - name: Resolve release tag
+        id: tag
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            echo "name=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=v${{ github.event.inputs.versionName }}" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Upload workflow artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lks-tv-release
+          path: dist/
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.name }}
+          name: LKS TV ${{ steps.package.outputs.version_name }}
+          body: |
+            ## LKS TV ${{ steps.package.outputs.version_name }} (versionCode ${{ steps.package.outputs.version_code }})
+
+            - APK: `LKS-TV.apk`
+            - SHA-256: `${{ steps.package.outputs.sha256 }}`
+            - Update manifest: `update-manifest.json`
+
+            In-app updates read:
+            `https://github.com/snowsglither/LKS-TV/releases/latest/download/update-manifest.json`
+          files: |
+            dist/LKS-TV.apk
+            dist/LKS-TV.apk.sha256
+            dist/update-manifest.json
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

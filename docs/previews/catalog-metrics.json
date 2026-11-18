@@ -1,0 +1,17 @@
+{
+  "metrics": {
+    "viewportH": 1080,
+    "heroH": 388.796875,
+    "heroPct": 35.999710648148145,
+    "posterW": 210,
+    "posterH": 315,
+    "bodyOverflow": "hidden",
+    "screenOverflowY": "auto",
+    "railsOverflow": "visible",
+    "railsOverflowY": "visible",
+    "scrollHeight": 2925,
+    "clientHeight": 1050,
+    "firstRailVisible": true
+  },
+  "ok": true
+}
