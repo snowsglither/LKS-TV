@@ -3,47 +3,46 @@
 ## Latest update
 
 **Agent:** Coding agent (Cursor)  
-**Task:** TASK-015.1 — Connecter GitHub public + activer releases  
+**Task:** TASK-016 — Android TV + Samsung Tizen  
 **Date:** 2026-11-18  
-**Status:** Push `main` OK. CI **success** (android + secrets-scan + web-preview). Artefact `lks-tv-debug` publié. **Pas de release officielle** tant que les secrets de signature ne sont pas configurés. Update TV physique **non testée**.
+**Status:** App Tizen Web TV créée (`tizen-tv/`), modules `shared/js/`, CI Tizen, docs. Android inchangé fonctionnellement. **Pas de release officielle.** **Non validé sur TV Samsung réelle.**
 
-## GitHub
+## Architecture
 
-- Repo : https://github.com/snowsglither/LKS-TV (public)
-- `origin` → `https://github.com/snowsglither/LKS-TV.git`
-- Premier commit : `b982496` — 223 fichiers, audit secrets OK
-- CI run : https://github.com/snowsglither/LKS-TV/actions/runs/44288338519 → **success**
-- Artefact CI : `lks-tv-debug` (~22 Mo)
-
-## Update channel
-
-`UPDATE_MANIFEST_URL` =
-`https://github.com/snowsglither/LKS-TV/releases/latest/download/update-manifest.json`
-
-404 attendu jusqu’à la première Release signée.
-
-## Secrets Actions à configurer (manuel)
-
-| Secret | Usage |
+| Client | Chemin |
 |---|---|
-| `LKSTV_KEYSTORE_BASE64` | Keystore release encodé base64 |
-| `LKSTV_KEYSTORE_PASSWORD` | Mot de passe store |
-| `LKSTV_KEY_ALIAS` | Alias |
-| `LKSTV_KEY_PASSWORD` | Mot de passe clé |
+| Android native Kotlin/Media3 | `app/` (pas WebView) |
+| Tizen Web TV | `tizen-tv/` → `.wgt` |
+| Domaine JS portable | `shared/js/` → vendored `tizen-tv/js/lib/` |
+| Preview PC | `web-preview/` (dev only) |
 
-Procédure : `docs/SIGNING.md`. Ne pas lancer `release.yml` avant.
+## Tizen implémenté
 
-## Étapes restantes avant release officielle
+- `config.xml` (Tizen 6.0+, tv-samsung)
+- Focus / Retour télécommande
+- Profils + prefs `localStorage`
+- Xtream / M3U validés, sync, démo mutual exclusion
+- Films / Séries / Live / Recherche / Favoris / progression
+- Lecteur AVPlay + fallback HTML5
+- `npm test` + `npm run build:wgt` (unsigned)
 
-1. Générer + sauvegarder `lks-release.jks` hors dépôt.
-2. Ajouter les 4 secrets Actions.
-3. Aligner `versionCode` / `versionName` si besoin.
-4. Lancer **Actions → Release → Run workflow** (ou tag `v0.3.0`).
-5. Vérifier assets `LKS-TV.apk`, `.sha256`, `update-manifest.json`.
-6. Installer release sur TV, puis tester update (non fait ici).
+## Tests exécutés
+
+```text
+cd tizen-tv && npm test          OK
+cd tizen-tv && npm run build:wgt OK → dist/LKS-TV.wgt (unsigned, gitignored)
+.\gradlew.bat :app:testDebugUnitTest  (régression Android)
+cd web-preview && npm test       OK
+```
 
 ## Non validé
 
-- Mise à jour in-app sur Android TV réelle.
-- Signature de production (secrets absents).
-- D-pad hardware / EPG XMLTV Android.
+- Samsung TV / Emulator Tizen hardware
+- Codecs IPTV réels sur AVPlay
+- Signature `.wgt` Distributor Samsung
+- Mises à jour store Smart Hub
+
+## Docs
+
+- `docs/TIZEN.md` — install, codecs, updates
+- ADR-012 dans `docs/DECISIONS.md`

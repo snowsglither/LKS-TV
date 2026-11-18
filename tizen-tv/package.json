@@ -1,0 +1,16 @@
+{
+  "name": "lks-tv-tizen",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "Samsung Tizen Web TV client for LKS TV",
+  "scripts": {
+    "test": "node tests/smoke-tizen.mjs",
+    "sync-shared": "node scripts/sync-shared.mjs",
+    "build:wgt": "node scripts/build-wgt.mjs",
+    "preview": "npx --yes serve -l 5173 ."
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

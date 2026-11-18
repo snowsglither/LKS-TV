@@ -1,0 +1,150 @@
+:root {
+  --bg: #0b0b0d;
+  --bg-elev: #16161a;
+  --mist: #f2f2f4;
+  --muted: #9a9aa3;
+  --brand: #e50914;
+  --accent: #f5c451;
+  --focus: #ffffff;
+  --radius: 14px;
+  font-family: "Segoe UI", "TizenSans", "SamsungOne", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(1200px 700px at 20% -10%, #2a1014 0%, var(--bg) 55%);
+  color: var(--mist);
+  overflow: hidden;
+}
+.app-root, .screen {
+  width: 100%;
+  height: 100%;
+  padding: 48px 64px;
+  overflow: auto;
+}
+.brand {
+  color: var(--brand);
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  font-size: 18px;
+}
+.muted { color: var(--muted); }
+.msg { color: var(--accent); }
+.err { color: #ff7b7b; font-size: 14px; }
+h1 { font-size: 42px; margin: 12px 0; font-weight: 700; }
+h2 { font-size: 22px; margin: 28px 0 12px; font-weight: 600; }
+.top {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.chip, .dest, .poster, .profile-card, .ep, .search-input, .form input {
+  border: 2px solid transparent;
+  background: rgba(255,255,255,0.06);
+  color: var(--mist);
+  border-radius: var(--radius);
+  padding: 12px 18px;
+  font-size: 18px;
+  outline: none;
+}
+.chip.accent, .dest:focus, .chip:focus, .poster:focus, .profile-card:focus, .ep:focus, .search-input:focus, .form input:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.35);
+  background: rgba(255,255,255,0.12);
+}
+.chip.accent { background: linear-gradient(135deg, #e50914, #a10810); border-color: transparent; }
+.splash, .profiles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.profile-card {
+  width: 160px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.profile-card .avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+}
+.dest-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.dest { min-height: 110px; font-size: 24px; font-weight: 650; }
+.rail {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+.poster {
+  min-width: 180px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(180deg, #24242c, #121216);
+}
+.poster .title { font-size: 15px; text-align: left; }
+.poster .bar {
+  display: block;
+  height: 4px;
+  background: rgba(255,255,255,0.15);
+  margin-top: 8px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.poster .bar i {
+  display: block;
+  height: 100%;
+  background: var(--brand);
+}
+.live-cols { display: grid; grid-template-columns: 280px 1fr; gap: 24px; }
+.groups, .channels { display: flex; flex-direction: column; gap: 10px; }
+.ep { text-align: left; }
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 10px;
+  margin: 12px 0 20px;
+  max-width: 920px;
+}
+.source-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.player { position: relative; padding: 0; }
+.player-surface {
+  position: absolute;
+  inset: 0;
+  background: #000;
+}
+.player-ui {
+  position: absolute;
+  left: 48px;
+  right: 48px;
+  bottom: 48px;
+  padding: 24px;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.85));
+}
+.season-tabs, .editions { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+.episodes { display: flex; flex-direction: column; gap: 8px; max-width: 720px; }

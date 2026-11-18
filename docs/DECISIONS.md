@@ -76,3 +76,10 @@
 **Context:** Users must not lose profiles/sources/progress after upgrades.  
 **Decision:** Keep stable `applicationId` `com.lkstv.app` and a single production signing key; persist profiles (`ProfileStore`) and prefs JSON under app files; Keystore for Xtream secrets. Schema version fields allow forward migrations.  
 **Consequences:** Losing the release keystore forces a new package identity; debug builds use `.debug` suffix and do not share data with release.
+
+## ADR-012 — Dual clients: Android native + Tizen Web (TASK-016)
+
+**Status:** Accepted  
+**Context:** Samsung TVs require Tizen packaging; wrapping the Android app or shipping only a PC web-preview is insufficient.  
+**Decision:** Keep Android as Kotlin/Media3. Ship a distinct Tizen Web TV app that vendors portable JS modules from `shared/js` (mirroring web-preview domain logic). Do not convert the APK into a WebView of the website.  
+**Consequences:** Two UI codepaths; shared rules for demo exclusion, languages, search, and catalog parsing; Tizen signing/update differs from GitHub APK updates.

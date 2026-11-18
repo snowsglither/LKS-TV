@@ -2,7 +2,8 @@
 
 ## Goals
 
-- Android TV / Google TV only for v1 UI (phone/tablet later if ever).
+- Android TV / Google TV **native** client (Kotlin / Media3) — never a WebView wrapper of the site.
+- Samsung Tizen Web TV as a **separate** packaged app (`tizen-tv/`), reusing portable JS domain modules.
 - Clear UI / state / domain separation so IPTV ingestion and player can plug in without rewriting navigation.
 - Profile-scoped user preferences; device-scoped source credentials.
 
@@ -39,6 +40,17 @@ app/
 ### Navigation (logical)
 
 `Splash → Profiles → Hub → Section → Detail`
+
+### Multiplatform shape (TASK-016)
+
+```
+app/                 # Android TV native (Kotlin)
+web-preview/         # Localhost diagnostic SPA + Node (not shipping runtime for TV)
+shared/js/           # Portable catalog/language/search/demo helpers
+tizen-tv/            # Samsung Tizen Web TV (.wgt) — vendors shared into js/lib/
+```
+
+Tizen persists via `localStorage` (weaker than Android Keystore). Playback: AVPlay with HTML5 fallback. Updates: Samsung Seller / sideload — not the Android APK installer.
 
 ### Planned modules (later)
 

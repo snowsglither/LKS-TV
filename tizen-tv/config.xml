@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:tizen="http://tizen.org/ns/widgets"
+        id="http://lkstv.app/tizen"
+        version="0.3.0"
+        viewmodes="maximized">
+  <tizen:application id="lkstv.LksTv" package="lkstv" required_version="6.0"/>
+  <content src="index.html"/>
+  <feature name="http://tizen.org/feature/screen.size.normal.1080.1920"/>
+  <icon src="images/icon.png"/>
+  <name>LKS TV</name>
+  <description>LKS TV for Samsung Tizen — IPTV Xtream/M3U client (separate from Android APK).</description>
+  <author href="https://github.com/snowsglither/LKS-TV" email="noreply@lkstv.app">LKS TV</author>
+  <access origin="*" subdomains="true"/>
+  <tizen:privilege name="http://tizen.org/privilege/internet"/>
+  <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
+  <tizen:privilege name="http://developer.samsung.com/privilege/network.public"/>
+  <tizen:privilege name="http://tizen.org/privilege/tv.audio"/>
+  <tizen:profile name="tv-samsung"/>
+  <tizen:setting screen-orientation="landscape" context-menu="disable" background-support="disable" encryption="disable" install-location="auto" hwkey-event="enable"/>
+  <tizen:content-security-policy>default-src 'self' data: blob: https: http:; script-src 'self' 'unsafe-inline' file: data:; style-src 'self' 'unsafe-inline'; media-src * blob: data: https: http:; img-src * data: blob: https: http:; connect-src * https: http:;</tizen:content-security-policy>
+</widget>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>LKS TV</title>
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <div id="app" class="app-root" aria-live="polite"></div>
+    <!-- webapis.js is injected by Tizen runtime ($WEBAPIS). Absent in desktop browsers → HTML5 fallback. -->
+    <script>
+      (function () {
+        var s = document.createElement('script');
+        s.src = '$WEBAPIS/webapis/webapis.js';
+        s.onerror = function () { /* browser / CI preview */ };
+        document.head.appendChild(s);
+      })();
+    </script>
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

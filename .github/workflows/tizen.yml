@@ -1,0 +1,36 @@
+name: Tizen
+
+# Standalone Tizen checks (also covered by ci.yml). Never publishes signing certs.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tizen-tv/**"
+      - "shared/**"
+      - ".github/workflows/tizen.yml"
+  pull_request:
+    paths:
+      - "tizen-tv/**"
+      - "shared/**"
+
+jobs:
+  tizen-package:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tizen-tv
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: node scripts/sync-shared.mjs
+      - run: npm test
+      - name: Install zip
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq zip
+        working-directory: .
+      - run: npm run build:wgt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lks-tv-tizen-wgt-unsigned
+          path: tizen-tv/dist/LKS-TV.wgt

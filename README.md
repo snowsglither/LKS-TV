@@ -2,15 +2,15 @@
 
 Native **Android TV / Google TV** client for authorized IPTV sources (Xtream Codes / M3U). Kotlin, Jetpack Compose (TV), D-pad-first.
 
-**Repository:** [github.com/snowsglither/LKS-TV](https://github.com/snowsglither/LKS-TV) (public). Updates via GitHub Releases + HTTPS manifest (no tokens in the APK).
+**Repository:** [github.com/snowsglither/LKS-TV](https://github.com/snowsglither/LKS-TV) (public). Android updates via GitHub Releases + HTTPS manifest (no tokens in the APK). Tizen uses a separate `.wgt` package (see [docs/TIZEN.md](docs/TIZEN.md)).
 
 ## Current status
 
-**TASK-015** — autonomous APK parity push, persistent profiles, demo mutual exclusion with real IPTV, GitHub Actions CI/release scaffolding, in-app HTTPS update check (manifest URL configurable).
+**TASK-016** — Samsung Tizen Web TV app (`tizen-tv/`) alongside native Android; shared JS domain modules; CI builds unsigned `.wgt`.
 
-Earlier: navigation shell, IPTV multi-source + Keystore, catalog merge, cinematic UI, search, Live TV, Media3 player, premium detail/player UX.
+**TASK-015.x** — autonomous APK, GitHub Actions, in-app HTTPS update check.
 
-Still open: native XMLTV EPG on Android, hardware D-pad sign-off, WorkManager periodic sync, Room (JSON stores — ADR-007), explicit PC→TV migration.
+Still open: Samsung hardware validation, native XMLTV EPG on Android, WorkManager periodic sync, Room, official signed store releases.
 
 ## Docs
 
@@ -24,6 +24,7 @@ Still open: native XMLTV EPG on Android, hardware D-pad sign-off, WorkManager pe
 | [docs/SIGNING.md](docs/SIGNING.md) | Release signing & key recovery |
 | [docs/UPDATES.md](docs/UPDATES.md) | In-app update channel |
 | [docs/PARITY_MATRIX_TASK015.md](docs/PARITY_MATRIX_TASK015.md) | Web ↔ Android parity |
+| [docs/TIZEN.md](docs/TIZEN.md) | Samsung Tizen app, `.wgt`, install |
 | [docs/VERSIONS.md](docs/VERSIONS.md) | Version history |
 | [agents/AGENTS.md](agents/AGENTS.md) | Agent coordination rules |
 | [agents/HANDOFF.md](agents/HANDOFF.md) | Latest agent handoff |
@@ -52,6 +53,16 @@ Then open **http://127.0.0.1:3000**. Server binds **127.0.0.1** by default. Smok
 Details, security notes, and Android vs preview differences: [web-preview/README.md](web-preview/README.md).
 
 **Do not treat the preview as validation of native Compose / D-pad behaviour.**
+
+## Samsung Tizen
+
+```powershell
+cd tizen-tv
+npm test
+npm run build:wgt
+```
+
+Details: [docs/TIZEN.md](docs/TIZEN.md). Unsigned `.wgt` only in CI — sign with Tizen Certificate Manager locally. Do not commit `.p12` certificates.
 
 ## Safety
 

@@ -64,3 +64,30 @@ jobs:
           cache-dependency-path: web-preview/package-lock.json
       - run: npm ci
       - run: npm test
+
+  tizen:
+    name: Tizen smoke + unsigned wgt
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tizen-tv
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Sync shared modules
+        run: node scripts/sync-shared.mjs
+      - name: Tizen unit/smoke tests
+        run: npm test
+      - name: Build unsigned .wgt
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq zip
+          npm run build:wgt
+      - name: Upload unsigned wgt
+        uses: actions/upload-artifact@v4
+        with:
+          name: lks-tv-tizen-wgt-unsigned
+          path: tizen-tv/dist/LKS-TV.wgt
+          if-no-files-found: warn

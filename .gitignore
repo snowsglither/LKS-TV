@@ -34,3 +34,10 @@ web-preview/node_modules/
 build-log.txt
 update-manifest.local.json
 releases-local/
+tizen-tv/dist/
+*.wgt
+!tizen-tv/images/
+*.p12
+author-cert*
+distributor-cert*
+tizen-studio-data/
